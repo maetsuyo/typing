@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-// お題リスト（日本語とそのローマ字バリエーション）
+// お題リスト
 const words = [
   { japanese: "みかん", variations: ["mikan"] },
   { japanese: "りんご", variations: ["ringo", "rinngo"] },
@@ -10,7 +10,7 @@ const words = [
   { japanese: "オレンジ", variations: ["orenji", "orennji", "orenzi", "orennzi"] },
   { japanese: "グレープフルーツ", variations: ["gure-puhuru-tsu", "gure-pufuru-tsu", "gure-puhuru-tu", "gure-pufuru-tu"] },
   { japanese: "さくらんぼ", variations: ["sakuranbo", "sakurannbo", "saquranbo", "saqurannbo"] },
-  { japanese: "フルーツ全種類盛り合わせ", variations: ["huru-tsuzennsyuruimoriawase", "huru-tuzennsyuruimoriawase", "huru-tsuzensyuruimoriawase", "huru-tsuzennsilyuruimoriawase", "furu-tsuzennsyuruimoriawase", "furu-tuzennsyuruimoriawase", "furu-tsuzensyuruimoriawase", "furu-tsuzennsilyuruimoriawase", "furu-tuzensyuruimoriawase"] },
+  { japanese: "フルーツ全種類盛り合わせ", variations: ["huru-tsuzennsyuruimoriawase", "huru-tuzennsyuruimoriawase", "huru-tsuzensyuruimoriawase", "huru-tsuzennsilyuruimoriawase", "furu-tsuzennsyuruimoriawase", "furu-tuzennsyuruimoriawase", "furu-tsuzensyuruimoriawase", "furu-tsuzennsilyuruimoriawase", "furu-tuzensyuruimoriawase", "huru-tuzensyuruimoriawase"] },
 ];
 
 export default function Home() {
@@ -21,7 +21,11 @@ export default function Home() {
   const currentWord = words[index];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newInput = e.target.value;
+    let newInput = e.target.value;
+
+    // 全角文字を除外し、半角英数字のみにする
+    newInput = newInput.replace(/[^\x00-\x7F]/g, "");
+
     setInput(newInput);
 
     // variations の中で、入力が一致するものがあれば切り替える
